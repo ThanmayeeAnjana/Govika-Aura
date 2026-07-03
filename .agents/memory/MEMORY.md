@@ -1,0 +1,3 @@
+- [Drizzle inArray for multi-id filters](drizzle-inarray.md) — use `inArray()`, not `sql\`ANY(${arr})\``, or params get mis-expanded.
+- [Orval schema name collisions](orval-schema-collisions.md) — TS2308 export ambiguity when an OpenAPI schema name matches Orval's internal generated name.
+- [New composite lib checklist](composite-lib-checklist.md) — new `lib/*` packages need composite+declarationMap+emitDeclarationOnly or referencing packages fail TS6306.
