@@ -1,0 +1,67 @@
+Architected reusable markdown template for agent deployment
+Architected reusable markdown template for agent deployment
+A few tips for using this:
+
+Paste the whole thing as your first message to Replit Agent — don't split it across multiple messages, since the agent plans better with full context upfront
+It intentionally leaves payment gateway integration out of the first build — get the core flow working and visually correct first, then come back and ask it to wire up Razorpay as a separate step (that part tends to need more back-and-forth debugging)
+After the first draft, you'll likely want to send follow-ups like "replace the placeholder products with these real ones" (and paste your mom's actual catalog) or "adjust the color scheme to warm gold/maroon tones" to match her brand feel
+Once it's live, Replit gives you a shareable link you can drop straight into Instagram bio, WhatsApp, or Facebook — same as the Dukaan approach, just fully custom.
+
+
+Replit agent mvp prompt
+Document · MD 
+wait i already gave the first one to it
+
+
+Thought for 2s
+Thought for 2s
+Ah okay — no worries, that's an easy fix. A couple of quick questions so I point you the right direction:
+
+Did Replit Agent already build something from that first prompt (i.e., is there a working draft app now), or did it just ask clarifying questions back and you haven't gotten a build yet?
+
+If it already built something: don't restart — just paste this tightened prompt as a follow-up message in the same chat, saying something like "here's a more detailed spec, please rebuild/align the app to match this exactly." The agent will use it to refine what's there rather than start over.
+
+If it's still just chatting/planning and hasn't generated code yet: you can paste this prompt now as the next message and it'll fold it into the plan before building.
+
+Either way, nothing's wasted — what would help most is knowing what Replit actually did after your first message. Can you tell me what state it's in right now?
+
+yeah its generating and it is looking good, but my doubt is will the backend work for it
+
+
+Evaluated backend functionality and production-readiness requirements
+Evaluated backend functionality and production-readiness requirements
+Good question to ask now, before you build too much on top of it. "Backend working" for an app like this really means a few separate things — worth checking each:
+
+1. Is it actually storing data, or just faking it?
+Ask the agent directly (in chat) or check: are products and orders saved in a real database, or just held in memory? If it's in-memory, everything gets wiped every time the app restarts or you refresh the underlying environment — orders would vanish. Ask it: "confirm you're using a persistent database, not just in-memory storage" — it should tell you honestly, and can add a database (like Replit's built-in database, or Postgres) if it hasn't already.
+
+2. Does it survive being closed and reopened?
+Close the Replit tab, wait a few minutes, reopen the app link, and check if your test products/orders are still there. This is the simplest real test.
+
+3. Is it actually live 24/7, or only while you're in the editor?
+By default, Replit projects often only run while the workspace is open in your browser (the "dev" preview). For the store to be reachable any time someone taps your Instagram link, it needs to be deployed — Replit has a separate "Deploy" step that gives it a permanent URL that stays live even when you're not looking at it. This usually isn't automatic — you may need to explicitly deploy it, and depending on current Replit plans, that can require a small paid tier for always-on hosting.
+
+4. Does placing an order actually notify your mom?
+Test end-to-end: add a product, place a test order as a "customer," and confirm the order shows up correctly on the seller side (and triggers whatever notification you asked for).
+
+5. Payment is still just a placeholder right now
+Since we deliberately left Razorpay out of the first build, "backend working" for payments specifically isn't tested yet — that's the next real risk area once the rest is solid.
+
+My honest suggestion: before adding more features, run the close-tab-reopen test and the full order test I described above. If both hold up, the backend's solid enough to keep building on. If either fails, tell the agent exactly what broke — it can usually fix persistence/deployment issues quickly once flagged.
+
+Want help wording the message to ask Replit Agent to confirm persistence and deployment status?
+
+yeah
+
+
+Orchestrated message draft for deployment inquiry
+Orchestrated message draft for deployment inquiry
+Here's a message you can paste directly into Replit Agent:
+
+Before we add more features, I want to confirm a few things about how this app is currently set up:
+
+Are products and orders being saved in a persistent database (like Postgres or Replit's built-in database), or are they currently stored in memory? If it's in-memory, please switch to a persistent database now, before we build further.
+If I close this tab and come back in an hour, will my test products and orders still be there? Confirm this explicitly.
+Is this app currently deployed with a permanent, always-on URL, or does it only run while I have the workspace open? If it's not deployed yet, walk me through deploying it so the store link works even when I'm not actively in the editor.
+When a test customer places an order, does it correctly appear on the seller/orders side with all the right details (name, phone, address, items, total)? Please confirm this is tested and working, not just visually built.
+Please answer each point directly, and fix anything that isn't already solid before we continue.
