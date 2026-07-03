@@ -34,8 +34,8 @@ export function Navbar() {
           <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
           </Button>
-          <Link href="/admin/orders" className="hidden sm:block">
-            <Button variant="ghost" size="icon">
+          <Link href="/orders" className="hidden sm:block">
+            <Button variant="ghost" size="icon" title="Your Orders">
               <User className="h-5 w-5" />
             </Button>
           </Link>

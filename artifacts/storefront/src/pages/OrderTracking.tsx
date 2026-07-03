@@ -63,7 +63,13 @@ export function OrderTracking() {
           <h1 className="font-serif text-3xl font-bold text-foreground mb-2">Order Confirmed!</h1>
           <p className="text-muted-foreground mb-4">Thank you for your purchase, {order.customerName}.</p>
           <p className="font-mono text-sm bg-muted inline-block px-3 py-1 rounded-md">Order #{order.id}</p>
-          
+
+          <div className="mt-4">
+            <Link href="/orders" className="text-sm text-primary underline underline-offset-2">
+              View all your orders
+            </Link>
+          </div>
+
           {order.paymentMethod === "upi" && (
             <div className="mt-6 p-4 bg-primary/10 rounded-lg text-primary text-sm max-w-md mx-auto">
               <strong>Action Required:</strong> You chose UPI payment. We will contact you shortly on WhatsApp ({order.phone}) to share the payment QR code and complete your order.

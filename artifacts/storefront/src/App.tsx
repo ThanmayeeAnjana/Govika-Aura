@@ -11,6 +11,7 @@ import { ProductDetail } from "@/pages/ProductDetail";
 import { Cart } from "@/pages/Cart";
 import { Checkout } from "@/pages/Checkout";
 import { OrderTracking } from "@/pages/OrderTracking";
+import { OrderHistory } from "@/pages/OrderHistory";
 import NotFound from "@/pages/not-found";
 
 // Admin
@@ -37,6 +38,7 @@ function Router() {
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/orders" component={OrderHistory} />
       <Route path="/order/:id" component={OrderTracking} />
 
       {/* Admin Routes */}

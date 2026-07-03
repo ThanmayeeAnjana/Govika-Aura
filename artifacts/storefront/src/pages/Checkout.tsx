@@ -10,6 +10,7 @@ import { useLocation } from "wouter";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { addOrderToHistory } from "@/lib/orderHistory";
 
 export function Checkout() {
   const { items, cartTotal, clearCart } = useCart();
@@ -57,6 +58,7 @@ export function Checkout() {
       {
         onSuccess: (order) => {
           clearCart();
+          addOrderToHistory(order.id);
           setLocation(`/order/${order.id}`);
         },
         onError: () => {
