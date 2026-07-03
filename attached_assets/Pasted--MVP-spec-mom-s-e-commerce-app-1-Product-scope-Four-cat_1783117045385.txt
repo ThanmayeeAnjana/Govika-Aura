@@ -1,0 +1,69 @@
+# MVP spec — mom's e-commerce app
+
+## 1. Product scope
+
+Four categories at launch: **Sarees, Kurtis, Puja items, Decor**. No sub-brands or multi-vendor support — this is a single-seller storefront.
+
+## 2. Customer-facing screens
+
+| Screen | Core elements |
+|---|---|
+| Home | Category chips, product grid, search bar, cart icon with count |
+| Category browse | Filtered product grid for one category |
+| Product detail | Photos, name, price, description, size/color variant picker (if applicable), stock status ("In stock" / "Made to order"), add-to-cart button |
+| Cart | Line items with quantity controls, subtotal |
+| Checkout | Delivery details (name, phone, address), payment method (UPI / cash on delivery), order summary, place order button |
+| Order confirmation | Order number, summary, estimated delivery/ready date |
+| Order tracking (simple) | Status: received → packed → shipped/ready, updated manually by mom |
+
+## 3. Mom-facing screens (keep minimal)
+
+| Screen | Core elements |
+|---|---|
+| Add/edit product | Photo upload, name, category, price, stock toggle, variants (size/color) if needed |
+| Orders list | New orders at top, tap to see details, buttons to update status |
+| Notifications | WhatsApp or email ping on every new order — no need for a custom in-app inbox at MVP stage |
+
+That's it — no analytics dashboard, no multi-user admin, no bulk upload tool for v1. Add those only once she's using the basics comfortably.
+
+## 4. Explicitly out of scope for MVP
+
+- Reviews and ratings
+- Wishlists
+- Discount codes / coupons
+- Delivery partner API integration (she can share tracking manually via WhatsApp)
+- Multiple staff logins
+- Advanced filters (price range, sort by popularity, etc.) — categories are enough at first
+
+## 5. Suggested tech approach
+
+**Recommended: mobile-friendly web app, not a native app**, for v1.
+
+Why:
+- No app store review delays or Apple/Google developer account fees
+- She can share a single link on WhatsApp/Instagram — customers don't need to "install" anything
+- Faster and cheaper to build and update
+- Can be wrapped into a native app later (using something like a WebView shell) once there's real order volume, without rebuilding from scratch
+
+**Stack suggestion:**
+- Frontend: simple React or plain HTML/CSS storefront
+- Backend/data: a lightweight backend (Firebase, Supabase, or similar) — no need for a custom server at this scale
+- Payments: Razorpay Payment Links or Razorpay Checkout — well-supported in India, quick to integrate, supports UPI/cards
+- Order notification: WhatsApp Business API (or even a simple email/SMS trigger) on new order
+
+## 6. Data model (minimal)
+
+**Product**: id, name, category, price, description, photos[], variants[] (optional), stock_status (in_stock / made_to_order), active (bool)
+
+**Order**: id, customer_name, phone, address, items[] (product_id, variant, qty, price), subtotal, delivery_fee, total, payment_method, status (received / packed / shipped), created_at
+
+## 7. Rough build phases
+
+1. **Week 1–2**: Product catalog + category browsing (static, no cart yet) — get this in front of her to sanity-check categories and photos
+2. **Week 2–3**: Cart + checkout flow + payment integration
+3. **Week 3–4**: Order notifications to mom + simple status updates
+4. **Week 4+**: Polish, test with a handful of real customers, fix friction points
+
+## 8. What "done" looks like for MVP
+
+A customer can open a link, browse by category, add items to cart, pay via UPI or choose COD, and place an order. Mom gets notified immediately, can add new products herself without your help, and can update order status with one tap. Everything else is a v2 problem.
